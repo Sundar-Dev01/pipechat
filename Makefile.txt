@@ -1,0 +1,26 @@
+all:
+	gcc -std=c11 -Wall -Wextra -o pipe_chat main.c crypto.c events.c ipc.c logger.c pipe_chat.c queue.c service.c ticket.c
+
+run:
+	./pipe_chat
+
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all ./pipe_chat
+
+gtest:
+	gcc -std=c11 --coverage -Dmain=pipe_chat_application_main -c main.c -o main_test.o
+	gcc -std=c11 --coverage -c crypto.c events.c ipc.c logger.c pipe_chat.c queue.c service.c ticket.c
+	g++ -std=c++17 --coverage -o gtest_runner "gtest (1).cpp" main_test.o crypto.o events.o ipc.o logger.o pipe_chat.o queue.o service.o ticket.o -lgtest -lgtest_main -pthread
+	./gtest_runner
+
+coverage:
+	gcov -b -c main.c crypto.c events.c ipc.c logger.c pipe_chat.c queue.c service.c ticket.c
+
+cppcheck:
+	cppcheck --enable=all --inconclusive --std=c11 --language=c *.c 2> cppcheck.txt
+
+misra:
+	cppcheck --platform=unix64 --addon=misra --std=c11 --language=c *.c 2> misra.txt
+
+clean:
+	rm -f pipe_chat gtest_runner *.o *.gcda *.gcno *.gcov cppcheck.txt misra.txt
