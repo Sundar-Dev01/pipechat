@@ -192,6 +192,27 @@ TEST(ShowHelp, PrintsPriorityGuide){Capture c;show_help();auto s=c.str();EXPECT_
 
 /* main.c (compiled with main renamed for this test executable) */
 TEST(PipeChatMain, StartsAndQuits){std::string out;EXPECT_EQ(EXIT_SUCCESS,run_app("/quit\n",out));EXPECT_NE(std::string::npos,out.find("PIPE CHAT - CUSTOMER SUPPORT SYSTEM"));EXPECT_NE(std::string::npos,out.find("session closed"));}
-TEST(PipeChatMain, CreatesTicketAndQuits){std::string out;EXPECT_EQ(EXIT_SUCCESS,run_app("/ticket urgent gtest network issue\n/quit\n",out));EXPECT_NE(std::string::npos,out.find("TK-1001"));EXPECT_NE(std::string::npos,out.find("gtest network issue"));}
+TEST(PipeChatMain, CreatesTicketAndQuits)
+{
+    std::string out;
+    EXPECT_EQ(EXIT_SUCCESS, run_app(
+        "/ticket urgent gtest network issue\n"
+        "/ticket\n"
+        "/status abc\n"
+        "/status 9999\n"
+        "/tickets\n"
+        "/stat\n"
+        "/help\n"
+        "/start\n"
+        "/unknown\n"
+        "/quit\n", out));
+    EXPECT_NE(std::string::npos, out.find("TK-1001"));
+    EXPECT_NE(std::string::npos, out.find("gtest network issue"));
+    EXPECT_NE(std::string::npos, out.find("Usage: /status"));
+    EXPECT_NE(std::string::npos, out.find("not found"));
+    EXPECT_NE(std::string::npos, out.find("SESSION DASHBOARD"));
+    EXPECT_NE(std::string::npos, out.find("Reception process is active"));
+    EXPECT_NE(std::string::npos, out.find("Unknown command"));
+}
 
 

@@ -1,3 +1,6 @@
+#ifdef ENABLE_GCOV_DUMP
+#include <gcov.h>
+#endif
 #include "pipe_chat.h"
 #include <errno.h>
 #include <poll.h>
@@ -138,5 +141,8 @@ void child_process(int request_fd, int event_fd)
                      0, 0, 0, "", "Support service process is shutting down.");
     (void)close(request_fd);
     (void)close(event_fd);
+    #ifdef ENABLE_GCOV_DUMP
+    __gcov_dump();
+    #endif
     _exit(EXIT_SUCCESS);
 }

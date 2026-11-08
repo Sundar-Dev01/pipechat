@@ -54,17 +54,21 @@ int process_child_events(int event_fd, TicketRecord *tickets,
                            event.issue);
         }
 
-        (void)printf("\n[SUPPORT UPDATE] TK-%04d: %s\n",
-                     event.ticket_id, event.detail);
+        if (event.type == EVENT_ACCEPTED) {
+            (void)printf("\n[SUPPORT UPDATE] TK-%04d: %s\n",
+            event.ticket_id, event.detail);
+
         if (record != NULL) {
-            (void)printf("  Current status: %s | Last updated: ",
-                         status_text(record->status));
-            {
-                char updated[32];
-                format_time(record->updated_at, updated, sizeof(updated));
-                (void)printf("%s\n", updated);
-            }
+        (void)printf("  Current status: %s | Last updated: ",
+                     status_text(record->status));
+
+        {
+            char updated[32];
+            format_time(record->updated_at, updated, sizeof(updated));
+            (void)printf("%s\n", updated);
         }
+    }
+}
     }
     return processed;
 }
