@@ -1,0 +1,12 @@
+misra-c2012-7.1
+misra-c2012-10.4
+misra-c2012-12.1
+misra-c2012-13.3
+misra-c2012-15.4
+misra-c2012-15.5
+misra-c2012-15.6
+misra-c2012-17.7
+misra-c2012-21.1
+misra-c2012-21.6
+misra-c2012-21.10
+misra-c2012-21.3

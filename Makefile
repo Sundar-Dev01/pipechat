@@ -17,10 +17,10 @@ coverage:
 	gcov -b -c main.c crypto.c events.c ipc.c logger.c  queue.c service.c ticket.c
 
 cppcheck:
-	cppcheck --enable=all --inconclusive --std=c11 --language=c --suppress=missingIncludeSystem *.c 2> cppcheck.txt
+	cppcheck --enable=all --inconclusive --std=c11 --language=c --suppressions-list=suppressionC.txt *.c 2> cppcheck.txt
 
 misra:
-	cppcheck --platform=unix64 --addon=misra --std=c11 --language=c --suppress=missingIncludeSystem *.c 2> misra.txt
+	cppcheck --platform=unix64 --addon=misra --std=c11 --language=c --suppressions-list=suppressionM.txt *.c 2> misra.txt
 
 clean:
 	rm -f pipe_chat gtest_runner *.o *.gcda *.gcno *.gcov cppcheck.txt misra.txt

@@ -123,7 +123,8 @@ int main(void)
                     continue;
                 }
 
-                record = calloc(1U, sizeof(*record));
+                record = calloc(1U, sizeof(*record));  // Misra violation 11.5
+                //record =(TicketRecord *) calloc(1U, sizeof(*record));  // Corrected version
                 if (record == NULL) {
                     (void)printf("Unable to allocate ticket record.\n");
                     continue;
@@ -157,7 +158,8 @@ int main(void)
                 display_ticket(record);
             } else if (strncmp(input, "/status ", 8U) == 0) {
                 char *end_pointer;
-                long id = strtol(input + 8, &end_pointer, 10);
+                long id = strtol(input + 8, &end_pointer, 10); // Misra Violation rule 18.4 pointer arithmetic
+                //long id = strtol(&input[8], &end_pointer, 10);  // Corrected Version
                 TicketRecord *record;
 
                 if (*end_pointer != '\0' || id < 1L || id > 2147483647L) {

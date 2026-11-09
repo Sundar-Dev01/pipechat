@@ -1,0 +1,4 @@
+variableScope
+constVariablePointer
+unreadVariable
+missingIncludeSystem
